@@ -9,10 +9,15 @@
 #ifndef LOTTO_H
 #define LOTTO_H
 
-#define EXPECTED_ARGS 3
+#define EXPECTED_ARGS1 2
+#define EXPECTED_ARGS2 3  /*Optional third argument for the X best 
+                            winning numbers*/
+#define FILE_INDEX 1
+#define BEST_NUMBERS_INDEX 2
+#define DEFAULT_BEST_NUMBERS 6
 #define MAX_LOTTO_NUMBER 53
 #define USAGE "Usage: lotto lotto_numbers_file [numbers_to_print]\n"
-
+#define BASE 10
 
 
 struct lottery {
