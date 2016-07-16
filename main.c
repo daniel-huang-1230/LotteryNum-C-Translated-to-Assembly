@@ -49,13 +49,37 @@ if(argc == EXPECTED_ARGS2)
   errno=0; /*clear the errno first*/
   char *endptr;
   numbersToPrint=strtol(argv[BEST_NUMBERS_INDEX],&endptr,BASE);
-  
+
+/*check for error when the input number is too large for 32-bit long*/
+ if(errno !=0) {
+  char errStr[BUFSIZ];
+  (void)snprintf(errStr, BUFSIZ, TOO_BIG_NUM,argv[BEST_NUMBERS_INDEX],BASE);
+  perror(errStr);
+  return EXIT_FAILURE;
+ }
+
+/*check for error where input is not valid int*/
+
+if(*endptr !='\0')
+{
+  (void)fprintf(stderr,INVALID_INT,argv[BEST_NUMBERS_INDEX]);
+  return EXIT_FAILURE;
+
   }  
 
+/*check if the input argument is in bounds(1-53) */
 
+if(checkInBounds(numbersToPrint,MIN_LOTTO_NUM,MAX_LOTTO_NUM)!=1)
+{ /*print error message and exit if input out of bounds*/
+  (void)fprintf(stderr,OUT_OF_BOUNDS,argv[BEST_NUMBERS_INDEX],
+                MIN_LOTTO_NUM,MAX_LOTTO_NUM);
+  
+  return EXIT_FAILURE;
 
+  }
+}
 
-
+/*call init() to initialize the array of struct lottery*/
 
 
 

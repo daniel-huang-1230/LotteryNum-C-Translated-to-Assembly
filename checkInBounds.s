@@ -32,6 +32,9 @@
 
 checkInBounds:	
 	save	%sp, -96, %sp	!Save caller's window...magical line	
+	cmp	%i1,%i2		!compare min and max
+	bg	invalidbounds	!branch if the min and max are not in place
+	nop
 	cmp	%i0,%i1		!compare the input with min
 	bl	outofbounds	!branch if input is smaller than min
 	nop
@@ -39,6 +42,10 @@ checkInBounds:
 	bg	outofbounds	!branch if input is larger than max
 	nop
 	ba	inbounds	!jump to the end-of label
+	nop
+invalidbounds:
+	mov	-1,%i0		!set the return value to -1
+	ba end_if
 	nop
 outofbounds:
 	mov	0,%i0		!set the return value to 0
