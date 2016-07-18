@@ -69,27 +69,32 @@ if(*endptr !='\0')
 
 /*check if the input argument is in bounds(1-53) */
 
-if(checkInBounds(numbersToPrint,MIN_LOTTO_NUM,MAX_LOTTO_NUM)!=1)
+//if(checkInBounds(numbersToPrint,MIN_LOTTO_NUM,MAX_LOTTO_NUM)!=1)
 { /*print error message and exit if input out of bounds*/
-  (void)fprintf(stderr,OUT_OF_BOUNDS,argv[BEST_NUMBERS_INDEX],
-                MIN_LOTTO_NUM,MAX_LOTTO_NUM);
+ // (void)fprintf(stderr,OUT_OF_BOUNDS,argv[BEST_NUMBERS_INDEX],
+   //             MIN_LOTTO_NUM,MAX_LOTTO_NUM);
   
-  return EXIT_FAILURE;
+ // return EXIT_FAILURE;
 
   }
 }
 
 /*call init() to initialize the array of struct lottery*/
 
+struct lottery lotto[MAX_LOTTO_NUM+1];/*need 54 slots to hold 53 lotto
+                                        numbers*/
+//init(lotto,MAX_LOTTO_NUM);
 
 
-
-
-
-
-
-
-
+/*extract lines from the lotto numbers file*/
+char str[BUFSIZ];
+char *token;
+while(1) {
+/*read each line from the file*/
+if(fgets(str,BUFSIZ, filePtr)==NULL) break; /*break if EOF*/
+  token=strtok(str,TOKEN_SEPARATORS);
+  printf("%s\n", token);
+}
 
 
 

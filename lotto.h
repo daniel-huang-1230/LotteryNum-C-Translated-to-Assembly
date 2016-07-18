@@ -22,7 +22,7 @@
 #define TOO_BIG_NUM "\n\tConverting \"%s\" base %d"
 #define INVALID_INT "\n\t\"%s\" is not an integer\n" 
 #define OUT_OF_BOUNDS "numbers_to_print (%s) must be in range of [%d - %d]" 
-
+#define TOKEN_SEPARATORS  "\t\n\0"
 struct lottery {
   unsigned int lottoNumber;
   unsigned int count;
