@@ -32,26 +32,30 @@
   *	 %l0 - the traversal pointer	
   *	 %l1 - store (size of array)*number of elements
   *	 %l2 - used to store the index/lotto numbers
+  *	 %l3 - for temporary use
   */
 init:
 	save	%sp, -96, %sp	!save caller's window, don't have to save 
 				!additional space for array(done in main)
-	st	%i0, [%l0]	!the traversal pointer-->%l0
+	mov	%i0, %l0	!the traversal pointer-->%l0
 	mov	%i1, %o0	!move the number of elements(53) to %o0
 	mov	8, %o1		
 	call 	.mul		!call .mul to calculate 8*53=424
 	nop
+	clr	%l2		!%l2 to be the index
 	mov	%o0, %l1	!store 424 to %l1
-	st	%g0, [%l0]	!set the lottoNumber in lotto[0] to 0
-	st	%g0, [%l0+4]	!set the count in lotto[0] to 0
-	add	%l0, 8, %l0	!move to index 1 in the struct array
-	cmp	%l0, %l1	! the loop condition
+	add	%l1, %l0, %l1
+	cmp	%l0, %l1	!check conditions
 	bg	end_loop	!branch if %l0 is greater than 424
 	nop
-	set	1, %l2		!use %l2 to store indices/lotto numbers
 loop:	/*the loop body*/
-	st	%l2, [%l0]	!initialize the lotto number=index
-	st	%g0, [%l0+4]	!initialize count=0
+	ld	[%l0+4], %l3
+	
+	mov	%g0, %l3
+	st	%l3, [%l0+4]	!set count to 0
+	ld	[%l0], %l3
+	mov	%l2, %l3
+	st	%l3, [%l0]      !set the lotto number=index
 	inc	%l2		!index increments by 1
 	add	%l0, 8, %l0	!increments the traversal pointer
 	cmp	%l0, %l1

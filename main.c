@@ -11,7 +11,19 @@
  #include <stdlib.h>
  #include "lotto.h" 
  #include <errno.h> 
-
+ #include <string.h>
+ 
+ 
+ 
+ /*
+  * Function name :main()
+  * Function prototype: int main(int argc, char* argv[]);
+  * Description: processes the passed in command line arguments
+  * Parameters:
+  * arg1- int argc- the number of passed in arguments
+  * arg2- char *argv[] the string array that represents the arguments
+  * Return: 1 if exit successfully; -1 otherwise
+  */
  int main(int argc, char *argv[])
 {
   /*first check the number of the command line arguments*/
@@ -69,12 +81,12 @@ if(*endptr !='\0')
 
 /*check if the input argument is in bounds(1-53) */
 
-//if(checkInBounds(numbersToPrint,MIN_LOTTO_NUM,MAX_LOTTO_NUM)!=1)
-{ /*print error message and exit if input out of bounds*/
- // (void)fprintf(stderr,OUT_OF_BOUNDS,argv[BEST_NUMBERS_INDEX],
-   //             MIN_LOTTO_NUM,MAX_LOTTO_NUM);
+if(checkInBounds(numbersToPrint,MIN_LOTTO_NUM,MAX_LOTTO_NUM)!=1)
+{/* print error message and exit if input out of bounds*/
+  (void)fprintf(stderr,OUT_OF_BOUNDS,argv[BEST_NUMBERS_INDEX],
+               MIN_LOTTO_NUM,MAX_LOTTO_NUM);
   
- // return EXIT_FAILURE;
+  return EXIT_FAILURE;
 
   }
 }
@@ -83,25 +95,27 @@ if(*endptr !='\0')
 
 struct lottery lotto[MAX_LOTTO_NUM+1];/*need 54 slots to hold 53 lotto
                                         numbers*/
-//init(lotto,MAX_LOTTO_NUM);
+init(lotto,MAX_LOTTO_NUM);
 
 
 /*extract lines from the lotto numbers file*/
 char str[BUFSIZ];
 char *token;
-while(1) {
+while(fgets(str,BUFSIZ,filePtr)!=NULL) {
 /*read each line from the file*/
-if(fgets(str,BUFSIZ, filePtr)==NULL) break; /*break if EOF*/
+ /*break if EOF*/
   token=strtok(str,TOKEN_SEPARATORS);
-  printf("%s\n", token);
+
+ /*convert the valid tokens to long type number*/
+long num;
+if(tokenToLottoNum(token, MAX_LOTTO_NUM)>0)
+{
+num=tokenToLottoNum(token,MAX_LOTTO_NUM);
+  updateLottoCount(lotto, num);
 }
 
-
-
-
-
-
-
+/*error messages report*/
+}
 
 
 
