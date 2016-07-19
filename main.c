@@ -105,13 +105,13 @@ while(fgets(str,BUFSIZ,filePtr)!=NULL) {
 /*read each line from the file*/
  /*break if EOF*/
   token=strtok(str,TOKEN_SEPARATORS);
-
  /*convert the valid tokens to long type number*/
 long num;
-if(tokenToLottoNum(token, MAX_LOTTO_NUM)>0)
+//if(tokenToLottoNum(token, MAX_LOTTO_NUM)>0)
 {
 num=tokenToLottoNum(token,MAX_LOTTO_NUM);
-  updateLottoCount(lotto, num);
+updateLottoCount(lotto, num);
+printf("%d\n",num);
 }
 
 /*error messages report*/

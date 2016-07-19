@@ -9,7 +9,9 @@
 
  .global	tokenToLottoNum		!declares the symbol to be globally
  					!visible
+ .section ".data"
 
+ MIN_VALUE=1
  .section ".text"			!text segment begins here
 
  /*
@@ -26,19 +28,56 @@
   *	    endptr error happens; -3 if the number is not in bounds
   * Registers Used:
   *
-  * TODO
+  *  %l0-- errno
+  *  %l1 -- the retunrned num
+  *  %i0 -arg1- the passed in token
+  *  %i1 -the max lotto number
   */
 
 
 tokenToLottoNum:
 	save	%sp, (92-8)&-8, %sp
-	sub	%fp, 4, %o1		!store endptr to %o1
+	sub	%fp, 4, %l2		!store endptr to %l2
+	mov	%l2, %o1		!put in in %o1 for strtol
+	set	errno, %l0		!set %l0 to be errno
+	
+	clr	%l0			!clear errno to be zero first
 	mov	%i0, %o0		!copy the token to %o0
 	mov	10, %o2			!base 10 copied to %o2
 	call	strtol
 	nop
-
-
-
+	mov	%o0, %l1		!move the returned value to %l1
+	cmp	0,%l0			!check errno=0
+	be	checkendptr
+	nop
+	mov	-1,%i0			!return -1
+	ba 	end
+	nop
+checkendptr:
+	ld	[%l2],%l3		!load the &endptr to %l2
+	ldub	[%l3],%l3
+	cmp	%l3, %g0		!check if endptr==/0
+	be	checkBounds
+	nop
+	mov	-2,%i0			!return -2 if there is endptr error
+	ba	end
+	nop
+checkBounds:
+	mov	%l1, %o0
+	set	MIN_VALUE,%o1
+	mov	%i1, %o2
+	call	checkInBounds
+	nop
+	cmp	%o0,1			!compare the returned value to 1
+	be	validNum
+	nop
+	mov	-3,%i0
+	ba	end
+	nop
+validNum:
+	mov	%l1,%i0		!the num is a valid lotto number,
+					!return it 
+end:
 	ret
+
 	restore
