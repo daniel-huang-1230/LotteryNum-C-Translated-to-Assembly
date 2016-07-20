@@ -17,4 +17,10 @@
 
 
 updateLottoCount:
+	save	%sp, -96, %sp
 
+
+
+
+	ret 
+	restore

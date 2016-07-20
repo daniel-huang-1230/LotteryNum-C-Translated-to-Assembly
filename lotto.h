@@ -21,8 +21,10 @@
 #define BASE 10
 #define TOO_BIG_NUM "\n\tConverting \"%s\" base %d"
 #define INVALID_INT "\n\t\"%s\" is not an integer\n" 
-#define OUT_OF_BOUNDS "numbers_to_print (%s) must be in range of [%d - %d]" 
-#define TOKEN_SEPARATORS  "\t\n\0"
+#define OUT_OF_BOUNDS "numbers_to_print (%s) must be in range of [%d - %d]\n" 
+#define TOKEN_SEPARATORS  "\n \t"
+#define BAD_ENTRY "\n\tSkipping bad entry %s ... Not in range [%d - %d]\n"
+#define SKIP  "\n\tSkipping it ...\n"
 struct lottery {
   unsigned int lottoNumber;
   unsigned int count;

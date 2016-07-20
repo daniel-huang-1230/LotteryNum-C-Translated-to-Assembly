@@ -36,17 +36,18 @@
 
 
 tokenToLottoNum:
-	save	%sp, (92-8)&-8, %sp
+	save	%sp, (-92-8)&-8, %sp
 	sub	%fp, 4, %l2		!store endptr to %l2
-	mov	%l2, %o1		!put in in %o1 for strtol
 	set	errno, %l0		!set %l0 to be errno
 	
 	clr	%l0			!clear errno to be zero first
 	mov	%i0, %o0		!copy the token to %o0
+	mov	%l2, %o1		!put endptr into arguments
 	mov	10, %o2			!base 10 copied to %o2
 	call	strtol
 	nop
-	mov	%o0, %l1		!move the returned value to %l1
+	mov	%o0, %l1		!store the returned value to %l1
+	ld 	[%l0], %l0		!load errno 
 	cmp	0,%l0			!check errno=0
 	be	checkendptr
 	nop
@@ -63,9 +64,9 @@ checkendptr:
 	ba	end
 	nop
 checkBounds:
-	mov	%l1, %o0
-	set	MIN_VALUE,%o1
-	mov	%i1, %o2
+	mov	%l1, %o0		!put the returned num to %o0
+	set	MIN_VALUE,%o1		!copy the min lotto number to %o1
+	mov	%i1, %o2		!copy the max lotto number to %o2
 	call	checkInBounds
 	nop
 	cmp	%o0,1			!compare the returned value to 1
