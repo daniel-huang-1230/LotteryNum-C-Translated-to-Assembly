@@ -1,14 +1,27 @@
+# Project Overview
 
-Filename: README
-AUTHOR: Daniel Huang
-Userid: cs30ubp
-Date: 07/19/2016
+ This project is a personal programming assignment from the course **Computer Organization and System Programming"" at 
+ **UC San Diego**. The goal of the course overall is to help us learn the basics of **x86 assembly** and along with some **C** 
+ programming. The C program itself is very straightforward and self-explanatory, but the real challenge lies in where we, as students, had
+ to translate the program from **C** to **assembly**. Today, assembly language is used primarily for direct hardware manipulation,
+ access to specialized processor instructions, or to address critical performance issues. Typical uses are **device drivers**, 
+ **low-level embedded systems**, and **real-time systems**.
+ 
+ 
+ # Language
+  This program consists of both **C** and **assembly** language
+
+
+
+
+# Date: 07/19/2016
+
 
 1. This program would process a file containing a lot of lotto winning numbers as well
 as some random invalid numbers/symbols. And the program would be able to pick
 and sort the numbers that win the most and print out the top X winning number depending 
 on user's choice from the command line.
-2. With the supplied Makefile from the public directory, just type in "make" in command line.
+2. With the supplied **Makefile** from the public directory, just type in "make" in command line.
 
 3. Assuming your are in the correct directory with all source files in it, type:
 ./lotto [filenameofLottoNumbers] [optional X best winning numbers]
@@ -68,4 +81,5 @@ top 6 best winning lottery numbers.
 
 
 
-
+# Author 
+[@Daniel](https://www.linkedin.com/in/daniel-huang-443546115/)
