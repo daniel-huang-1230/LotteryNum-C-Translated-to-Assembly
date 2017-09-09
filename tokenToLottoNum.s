@@ -32,22 +32,23 @@
   *  %l1 -- the retunrned num
   *  %i0 -arg1- the passed in token
   *  %i1 -the max lotto number
+  *  %l2 -- to store endptr 	
+  *  %l3 - to store temporaries	
   */
 
 
 tokenToLottoNum:
 	save	%sp, (-92-8)&-8, %sp
 	sub	%fp, 4, %l2		!store endptr to %l2
-	set	errno, %l0		!set %l0 to be errno
 	
-	clr	%l0			!clear errno to be zero first
+	set	errno, %l0
+	clr	%l0			!set errno=0 first
 	mov	%i0, %o0		!copy the token to %o0
 	mov	%l2, %o1		!put endptr into arguments
 	mov	10, %o2			!base 10 copied to %o2
 	call	strtol
 	nop
 	mov	%o0, %l1		!store the returned value to %l1
-	ld 	[%l0], %l0		!load errno 
 	cmp	0,%l0			!check errno=0
 	be	checkendptr
 	nop

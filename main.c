@@ -107,18 +107,21 @@ int main(int argc, char *argv[])
     /*break if EOF*/
     /*convert the valid tokens to long type number*/
     token=strtok(str,TOKEN_SEPARATORS);
-    
-  if(tokenToLottoNum(token,MAX_LOTTO_NUM)>0)
+    if(token==NULL)
+    {
+      break;
+    }
+    if(tokenToLottoNum(token,MAX_LOTTO_NUM)>0)
     {
       num=tokenToLottoNum(token,MAX_LOTTO_NUM);
       updateLottoCount(lotto,num);
-      
+
     }
     /*out of bounds error*/
     else if(tokenToLottoNum(token,MAX_LOTTO_NUM)==-3)
     {
-      
-(void)fprintf(stderr,BAD_ENTRY,token,MIN_LOTTO_NUM,MAX_LOTTO_NUM); 
+
+      (void)fprintf(stderr,BAD_ENTRY,token,MIN_LOTTO_NUM,MAX_LOTTO_NUM); 
 
     }
     /*invalid int(endptr error)*/
@@ -136,7 +139,7 @@ int main(int argc, char *argv[])
       perror(str);
     }
     while(token!= NULL) {
-      
+
       token=strtok(NULL,TOKEN_SEPARATORS);
       if(token==NULL)
       {
@@ -146,12 +149,12 @@ int main(int argc, char *argv[])
       {
         num=tokenToLottoNum(token,MAX_LOTTO_NUM);
         updateLottoCount(lotto, num);
-      
+
       }
 
       else if (tokenToLottoNum(token,MAX_LOTTO_NUM)==-3)
       {
-       (void)fprintf(stderr,BAD_ENTRY,token,MIN_LOTTO_NUM,MAX_LOTTO_NUM); 
+        (void)fprintf(stderr,BAD_ENTRY,token,MIN_LOTTO_NUM,MAX_LOTTO_NUM); 
       }
       else if(tokenToLottoNum(token,MAX_LOTTO_NUM)==-2)
       {
@@ -164,15 +167,25 @@ int main(int argc, char *argv[])
   }
 
 
+  /*sort the array of struct*/
+  qsort(lotto, MAX_LOTTO_NUM+1,sizeof(struct lottery),compareLottoNums);
 
 
 
 
+  /*print the best winning number*/
+
+  if(argv[BEST_NUMBERS_INDEX]==NULL)
+  {
+
+    printBestLottoNums(lotto,DEFAULT_BEST_NUMBERS);
+  }
 
 
-
-
-
-
+  else 
+  {
+    /*print out the default 6 best numbers*/
+    printBestLottoNums(lotto,numbersToPrint);
+  }
   return EXIT_SUCCESS;
 }
